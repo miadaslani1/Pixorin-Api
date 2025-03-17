@@ -11,6 +11,11 @@ pip install django
 pip install djangorestframework
 
 حذف فولدر venv و قرار گرفتن در همان مسیر برای نوشتن دستورات دیگر در ترمینال 
+
+
+
+
+
 python -m venv venv
 
 
