@@ -23,10 +23,10 @@ class LicenseKey(models.Model):
     def is_expired(self):
         return timezone.now() > self.expiration_date
     
-    def save(self, *args, **kwargs):
-        if self.expiration_date < timezone.now():
-            self.is_active = False
-        super(LicenseKey, self).save(*args, **kwargs) 
+    #def save(self, *args, **kwargs):
+        #if self.expiration_date < timezone.now():
+            #self.is_active = False
+        #super(LicenseKey, self).save(*args, **kwargs) 
 
 
     def __str__(self):

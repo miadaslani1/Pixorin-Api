@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import LicenseKey, DNSRecord
 import uuid
 from django.utils.timezone import now, timedelta
+from django.utils import timezone
 
 # اکشن برای تمدید تاریخ انقضا
 @admin.action(description="تمدید لایسنس (۳۰ روز اضافه کن)")
@@ -13,15 +14,14 @@ def extend_license(modeladmin, request, queryset):
 
 # مدیریت LicenseKey در پنل ادمین
 class LicenseKeyAdmin(admin.ModelAdmin):
-    list_display = ("key", "user", "is_active", "expiration_date","name","status_icon")  # استفاده از `expiration_date`
-    list_filter = ("is_active", "expiration_date")  # استفاده از `expiration_date`
+    list_display = ("key", "user","status_icon", "expiration_date","name")  # استفاده از `expiration_date`
     search_fields = ("key", "user__username")
     actions = [extend_license]  # دکمه "تمدید لایسنس"
     def status_icon(self, obj):
-        if obj.is_active:
-            return "✔️"
-        else:
+        if obj.expiration_date < timezone.now():
             return "❌"
+        else: 
+            return "✔️"
     status_icon.short_description = 'Status'
 
 # مدیریت DNSRecord در پنل ادمین
